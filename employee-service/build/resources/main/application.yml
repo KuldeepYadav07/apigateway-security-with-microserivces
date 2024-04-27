@@ -1,0 +1,46 @@
+server:
+  port: 8083
+logging:
+  level:
+    org.springframework.web: ERROR
+    com.employeeservice: DEBUG
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+  file:
+    name: /Users/kuldeepsingh/Desktop/project/microservice/log/service.log
+
+spring:
+  application:
+    name: EMPLOYEE-SERVICE
+  data:
+    mongodb:
+      port: 27017
+      host: localhost
+      database: employeeService
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      EMP-DEPARTMENT-BREAKER:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 6s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
