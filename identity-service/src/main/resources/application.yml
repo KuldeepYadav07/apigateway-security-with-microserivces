@@ -1,0 +1,30 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: IDENTITY-SERVICE
+  data:
+    mongodb:
+      port: 27017
+      host: localhost
+      database: identityService
+
+eureka:
+  client:
+    service-url:
+     defaultZone: http://localhost:8761/eureka/
+
+
+
+
+
+logging:
+  level:
+    org.springframework.web: ERROR
+    com.employeeservice: DEBUG
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} - %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+  file:
+    name: /Users/kuldeepsingh/Desktop/project/microservice/log/service.log
